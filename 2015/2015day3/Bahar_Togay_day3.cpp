@@ -1,10 +1,10 @@
 #include <iostream>
 #include <fstream>
 
-int rows = 0, cols = 0;
+int rows = 3001, cols = 3001;
 int main() {
-	std::ifstream file("/Users/tr/Desktop/advent_of_code/2015day3/input.txt");
-	std::ifstream amount("/Users/tr/Desktop/advent_of_code/2015day3/input.txt");
+	std::ifstream file("/Users/tr/Desktop/advent_of_code/2015/2015day3/input.txt");
+	std::ifstream amount("/Users/tr/Desktop/advent_of_code/2015/2015day3/input.txt");
 	
 	int housecounter = 1, house = 0;
 	
@@ -23,7 +23,8 @@ int main() {
 		}
 		counter++;
 	}
-	
+	//6000+1:::ortadaki eleman 3001. [3001][3001]=0,0
+	counter = (2 * counter) + 1;
 	int** table = new int* [counter];
 	for (int i = 0;i < counter;i++) {
 		table[i] = new int[counter];
@@ -57,6 +58,8 @@ int main() {
 		}
 		
 	}
+
+
 
 	for (int i = 0;i < counter;i++) {
 		for (int j = 0;j < counter;j++) {
