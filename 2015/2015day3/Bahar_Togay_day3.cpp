@@ -1,85 +1,99 @@
 #include <iostream>
 #include <fstream>
+#define ROW 300
+#define COL 300
+using namespace std;
 
-int rows = 3001, cols = 3001;
-int main() {
-	std::ifstream file("/Users/tr/Desktop/advent_of_code/2015/2015day3/input.txt");
-	std::ifstream amount("/Users/tr/Desktop/advent_of_code/2015/2015day3/input.txt");
-	
-	int housecounter = 1, house = 0;
-	
-
-	char n = '^', e = '>', w = '<', s = 'v';
-	
-
+int main()
+{
+	ifstream file("/Users/tr/Desktop/advent_of_code/2015/2015day3/input.txt");
 	char check;
-	char aaaa;
-	int counter=0;
+	int arr[ROW][COL] = {0};
+	int santa_counter = 0;
+	int control = 3;
+	int s_row = 150, s_col = 150;
+	int s_s_row = 150, s_s_col = 150;
 
-	while (1) {
-		amount >> aaaa;
-		if (!file) {
-			break;
-		}
-		counter++;
-	}
-	//6000+1:::ortadaki eleman 3001. [3001][3001]=0,0
-	counter = (2 * counter) + 1;
-	int** table = new int* [counter];
-	for (int i = 0;i < counter;i++) {
-		table[i] = new int[counter];
-	}
-	for (int i = 0;i < counter;i++) {
-		for (int j = 0;j < counter;j++) {
-			table[i][j] = 0;
-		}
-	}
-	
-	while (1) {
+	while (1)
+	{
 		file >> check;
-		if (!file) {
+		if (!file)
+		{
 			break;
 		}
-		else if (check == n) {
-			cols++;
-			table[rows][cols] += 1;
+		else if (check == '^')
+		{
+			if (control % 2 == 0)
+			{
+				s_s_row++;
+				arr[s_s_row][s_s_col] += 1;
+				control++;
+			}
+			else if(control % 2 != 0)
+			{
+				s_row++;
+				arr[s_row][s_col] += 1;
+				control++;
+			}
 		}
-		else if (check == s) {
-			cols--;
-			table[rows][cols] += 1;
+		else if (check == '>')
+		{
+			if (control % 2 == 0)
+			{
+				s_s_col++;
+				arr[s_s_row][s_s_col] += 1;
+				control++;
+			}
+			else if(control % 2 != 0)
+			{
+				s_col++;
+				arr[s_row][s_col] += 1;
+				control++;
+			}
 		}
-		else if (check == e) {
-			rows++;
-			table[rows][cols] += 1;
+		else if (check == '<')
+		{
+			if (control % 2 == 0)
+			{
+				s_s_col--;
+				arr[s_s_row][s_s_col] += 1;
+				control++;
+			}
+			else if(control % 2 != 0)
+			{
+				s_col--;
+				arr[s_row][s_col] += 1;
+				control++;
+			}
 		}
-		else if (check == w) {
-			rows--;
-			table[rows][cols] += 1;
-		}
-		
-	}
-
-
-
-	for (int i = 0;i < counter;i++) {
-		for (int j = 0;j < counter;j++) {
-			if (table[i][j] != 0) {
-				housecounter++;
+		else if (check == 'v')
+		{
+			if (control % 2 == 0)
+			{
+				s_s_row--;
+				arr[s_s_row][s_s_col] += 1;
+				control++;
+			}
+			else if(control % 2 != 0)
+			{
+				s_row--;
+				arr[s_row][s_col] += 1;
+				control++;
 			}
 		}
 	}
-
-	std::cout << housecounter << std::endl;
-
-	for (int i = 0;i < counter;i++) {
-		delete[]table[i];
+	for (int i = 0; i < ROW; i++)
+	{
+		for (int j = 0; j < COL; j++)
+		{
+			if (arr[i][j] > 0)
+			{
+				santa_counter++;
+			}
+		}
 	}
-	delete[]table;
-	table = NULL;
+	cout << santa_counter<< "\n";
 
 	system("pause");
 	return 0;
-
-	
-
 }
